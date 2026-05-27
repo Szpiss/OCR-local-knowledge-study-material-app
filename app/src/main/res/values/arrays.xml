@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="subjects">
+        <item>高数</item>
+        <item>线代</item>
+        <item>英语</item>
+        <item>408</item>
+        <item>其他</item>
+    </string-array>
+</resources>

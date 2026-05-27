@@ -1,0 +1,24 @@
+# Gradle / Android build outputs
+.gradle/
+build/
+**/build/
+captures/
+
+# Local machine configuration
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# APK/AAB outputs generated locally
+*.apk
+*.aab
