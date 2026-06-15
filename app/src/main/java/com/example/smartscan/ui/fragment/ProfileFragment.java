@@ -24,6 +24,11 @@ import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * 我的/设置 Fragment，使用 SharedPreferences 保存用户偏好。
+ *
+ * 答辩重点：
+ * 1. 默认科目、提醒开关、提醒时间属于轻量配置，不需要放 SQLite。
+ * 2. 使用 SharedPreferences 更适合保存这类简单键值对。
+ * 3. 清空本地数据会调用 Repository 删除 StudyMaterial 表数据。
  */
 public class ProfileFragment extends Fragment {
     private Spinner spDefaultSubject;
@@ -58,6 +63,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadSettings() {
+        // 从 SharedPreferences 读取设置，回到页面时能看到上次保存的值。
         spDefaultSubject.setSelection(SubjectUtils.indexOf(preferenceManager.getDefaultSubject()));
         swReminder.setChecked(preferenceManager.isReminderEnabled());
         etReminderTime.setText(preferenceManager.getReminderTime());
@@ -71,6 +77,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void saveSettings() {
+        // 保存用户偏好。当前提醒调度是预留接口，真实通知可在后续版本接入。
         String subject = (String) spDefaultSubject.getSelectedItem();
         String time = etReminderTime.getText() == null ? "20:30" : etReminderTime.getText().toString().trim();
         if (time.isEmpty()) {
@@ -84,6 +91,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void confirmClearData() {
+        // 清空数据属于危险操作，因此弹窗二次确认，避免误删演示数据。
         new AlertDialog.Builder(requireContext())
                 .setTitle("清空本地数据")
                 .setMessage("此操作会删除所有学习资料和错题记录，确定继续吗？")

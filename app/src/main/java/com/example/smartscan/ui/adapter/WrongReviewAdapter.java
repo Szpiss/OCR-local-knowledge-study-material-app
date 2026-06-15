@@ -21,9 +21,13 @@ import java.util.List;
 
 /**
  * 错题复习中心适配器，提供复习一次、标记掌握、取消错题等训练动作。
+ *
+ * 答辩重点：
+ * 这个 Adapter 和知识库 Adapter 不同，说明错题中心不是简单换标题，而是有复习动作。
  */
 public class WrongReviewAdapter extends RecyclerView.Adapter<WrongReviewAdapter.ViewHolder> {
     public interface OnWrongActionListener {
+        // 具体数据更新仍由 Fragment/Repository 处理，Adapter 不直接操作数据库。
         void onReviewOnce(StudyMaterial material);
         void onMarkMastered(StudyMaterial material);
         void onCancelWrong(StudyMaterial material);
@@ -55,6 +59,7 @@ public class WrongReviewAdapter extends RecyclerView.Adapter<WrongReviewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // 错题列表项展示复习相关信息：难度、复习次数、上次复习、掌握状态、错误原因。
         StudyMaterial material = data.get(position);
         holder.tvTitle.setText(emptyToDefault(material.getTitle(), "未命名错题"));
         holder.tvMeta.setText("科目：" + emptyToDefault(material.getSubject(), "其他")

@@ -15,8 +15,10 @@
             android:id="@+id/tv_detail_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_header_panel"
+            android:padding="16dp"
             android:text="资料详情"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/surface"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -25,6 +27,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_original_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="@dimen/card_radius"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:id="@+id/iv_original_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="原图预览"
+                android:scaleType="centerCrop" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_no_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_empty_state"
+            android:gravity="center"
+            android:padding="14dp"
+            android:text="暂无原图"
             android:textColor="@color/text_secondary"
             android:textSize="13sp" />
 
@@ -45,13 +79,15 @@
             android:id="@+id/sp_detail_subject"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_spinner" />
 
         <Spinner
             android:id="@+id/sp_detail_source_type"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_spinner" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -86,7 +122,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="标记为错题" />
+            android:text="标记为错题"
+            android:textColor="@color/text_primary" />
 
         <LinearLayout
             android:id="@+id/layout_wrong_fields"
@@ -106,7 +143,8 @@
                 android:id="@+id/sp_detail_difficulty"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="6dp" />
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_spinner" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -126,7 +164,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="已掌握" />
+                android:text="已掌握"
+                android:textColor="@color/text_primary" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout

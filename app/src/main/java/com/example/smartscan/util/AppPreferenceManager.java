@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 /**
  * SharedPreferences 工具类，保存默认科目、提醒开关和提醒时间。
+ *
+ * 答辩重点：
+ * SharedPreferences 适合保存少量配置项；SQLite 更适合保存结构化资料数据。
  */
 public class AppPreferenceManager {
     private static final String PREF_NAME = "smart_scan_settings";
@@ -15,6 +18,7 @@ public class AppPreferenceManager {
     private final SharedPreferences preferences;
 
     public AppPreferenceManager(Context context) {
+        // 使用 applicationContext，避免 Fragment/Activity 销毁后持有页面引用。
         preferences = context.getApplicationContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 

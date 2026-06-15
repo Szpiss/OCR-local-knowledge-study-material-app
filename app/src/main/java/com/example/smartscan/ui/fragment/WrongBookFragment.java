@@ -26,7 +26,12 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.List;
 
 /**
- * 错题本 Fragment，只展示 isWrongQuestion = 1 的学习资料。
+ * 错题复习中心 Fragment，只展示 isWrongQuestion = 1 的学习资料。
+ *
+ * 答辩重点：
+ * 1. 错题中心不是独立数据源，而是 StudyMaterial 表的筛选视图。
+ * 2. 这里关注复习动作：复习一次、标记已掌握、取消错题。
+ * 3. 顶部统计卡片来自数据库聚合查询。
  */
 public class WrongBookFragment extends Fragment {
     private StudyMaterialRepository repository;
@@ -47,6 +52,7 @@ public class WrongBookFragment extends Fragment {
         adapter = new WrongReviewAdapter(requireContext(), new WrongReviewAdapter.OnWrongActionListener() {
             @Override
             public void onReviewOnce(StudyMaterial material) {
+                // 复习一次会让 reviewCount + 1，并更新 lastReviewTime。
                 repository.reviewOnce(material.getId());
                 Toast.makeText(requireContext(), "已记录一次复习", Toast.LENGTH_SHORT).show();
                 refreshList();
@@ -54,6 +60,7 @@ public class WrongBookFragment extends Fragment {
 
             @Override
             public void onMarkMastered(StudyMaterial material) {
+                // 已掌握只是改变 mastered 状态，不会删除资料。
                 repository.markMastered(material.getId());
                 Toast.makeText(requireContext(), "已标记为掌握", Toast.LENGTH_SHORT).show();
                 refreshList();
@@ -74,6 +81,7 @@ public class WrongBookFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // 从详情页返回后刷新，保证错题状态和统计卡片最新。
         refreshList();
     }
 
@@ -109,6 +117,7 @@ public class WrongBookFragment extends Fragment {
     }
 
     private void setupDifficultyChips(View view) {
+        // 难度筛选使用 1-5 级，0 表示全部。
         ChipGroup chipGroup = view.findViewById(R.id.chip_group_difficulty);
         for (String difficulty : SubjectUtils.FILTER_DIFFICULTIES) {
             Chip chip = new Chip(requireContext());
@@ -131,6 +140,7 @@ public class WrongBookFragment extends Fragment {
     }
 
     private void setupMasteredChips(View view) {
+        // 掌握状态筛选：-1 表示全部，0 未掌握，1 已掌握。
         ChipGroup chipGroup = view.findViewById(R.id.chip_group_mastered);
         for (String status : SubjectUtils.FILTER_MASTERED) {
             Chip chip = new Chip(requireContext());
@@ -153,6 +163,7 @@ public class WrongBookFragment extends Fragment {
     }
 
     private void refreshList() {
+        // 先刷新顶部统计，再刷新列表；这样复习一次/已掌握后页面反馈很明显。
         WrongStatistics statistics = repository.getWrongStatistics();
         bindStat(cardTotal, "错题总数", statistics.totalWrong);
         bindStat(cardPending, "待复习", statistics.pendingReview);
@@ -171,6 +182,7 @@ public class WrongBookFragment extends Fragment {
     }
 
     private void confirmCancelWrong(StudyMaterial material) {
+        // 取消错题后资料仍在知识库中，因此弹窗文案特别说明“只是移出错题中心”。
         new AlertDialog.Builder(requireContext())
                 .setTitle("取消错题标记")
                 .setMessage("确定将这条资料从错题复习中心移除吗？资料仍会保留在本地知识库。")

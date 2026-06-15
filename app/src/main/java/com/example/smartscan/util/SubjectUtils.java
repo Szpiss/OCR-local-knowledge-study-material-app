@@ -2,6 +2,9 @@ package com.example.smartscan.util;
 
 /**
  * 科目常量工具类，统一页面筛选与下拉框内容。
+ *
+ * 答辩重点：
+ * 把科目、来源类型、难度、掌握状态这些选项集中管理，避免各个页面写重复数组。
  */
 public class SubjectUtils {
     public static final String ALL = "全部";
@@ -13,6 +16,7 @@ public class SubjectUtils {
     public static final String[] FILTER_MASTERED = {"全部", "未掌握", "已掌握"};
 
     public static int indexOf(String subject) {
+        // Spinner 设置默认选中项时使用。找不到就默认选第一个，避免数组越界。
         if (subject == null) {
             return 0;
         }

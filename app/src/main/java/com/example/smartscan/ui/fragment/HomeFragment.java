@@ -22,6 +22,9 @@ import java.util.List;
 
 /**
  * 首页 Fragment，展示欢迎语、统计卡片和最近扫描资料。
+ *
+ * 答辩重点：
+ * 首页不是写死数据，统计卡片和最近资料都来自 SQLite 查询。
  */
 public class HomeFragment extends Fragment {
     private StudyMaterialRepository repository;
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // 每次回到首页都刷新，保证扫描新增、详情修改、错题复习后的统计能及时更新。
         refreshData();
     }
 
@@ -60,18 +64,21 @@ public class HomeFragment extends Fragment {
     }
 
     private void refreshData() {
+        // 首页四个统计卡片：总资料、错题、今日新增、复习次数。
         Statistics statistics = repository.getStatistics();
         bindStat(cardTotal, "总资料数", statistics.totalCount);
         bindStat(cardWrong, "错题数", statistics.wrongCount);
         bindStat(cardToday, "今日新增", statistics.todayCount);
         bindStat(cardReview, "复习次数", statistics.reviewCount);
 
+        // 只展示最近 5 条，避免首页列表过长，更多资料去知识库查看。
         List<StudyMaterial> recent = repository.getRecentMaterials(5);
         adapter.submitList(recent);
         tvEmpty.setVisibility(recent.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private void bindStat(View card, String label, int value) {
+        // item_stat_card 被首页和错题中心复用，这里统一给卡片填数字和标题。
         TextView tvValue = card.findViewById(R.id.tv_stat_value);
         TextView tvLabel = card.findViewById(R.id.tv_stat_label);
         tvValue.setText(String.valueOf(value));

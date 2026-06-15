@@ -2,6 +2,11 @@ package com.example.smartscan.data.entity;
 
 /**
  * 学习资料实体类，对应 SQLite 中的 StudyMaterial 表。
+ *
+ * 答辩重点：
+ * 1. 一条 StudyMaterial 既可以是普通资料，也可以是错题资料。
+ * 2. 是否进入错题中心由 isWrongQuestion 字段决定。
+ * 3. imagePath 保存原图 Uri，content 保存 OCR 文本。
  */
 public class StudyMaterial {
     private long id;
@@ -10,13 +15,13 @@ public class StudyMaterial {
     private String subject;
     private String sourceType;
     private String tags;
-    private String imagePath;
-    private int isWrongQuestion;
-    private int difficulty;
-    private String note;
-    private String wrongReason;
-    private int mastered;
-    private long nextReviewTime;
+    private String imagePath;       // 原图 Uri 字符串，详情页用它显示原图。
+    private int isWrongQuestion;    // 0 表示普通资料，1 表示错题复习中心可见。
+    private int difficulty;         // 错题难度，1-5 级。
+    private String note;            // 用户备注。
+    private String wrongReason;     // 错误原因，帮助用户复盘错题。
+    private int mastered;           // 0 未掌握，1 已掌握。
+    private long nextReviewTime;    // 下次复习时间，当前预留给后续提醒功能。
     private long createTime;
     private long updateTime;
     private int reviewCount;

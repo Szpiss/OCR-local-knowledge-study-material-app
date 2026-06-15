@@ -10,8 +10,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_header_panel"
+        android:padding="16dp"
         android:text="本地知识库 / 全部资料"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/surface"
         android:textSize="22sp"
         android:textStyle="bold" />
 
@@ -95,6 +97,7 @@
         android:id="@+id/tv_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_empty_state"
         android:gravity="center"
         android:padding="24dp"
         android:text="暂无匹配资料"

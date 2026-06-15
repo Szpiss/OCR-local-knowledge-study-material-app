@@ -14,10 +14,46 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="模拟扫描识别"
-            android:textColor="@color/text_primary"
+            android:background="@drawable/bg_header_panel"
+            android:padding="16dp"
+            android:text="扫描识别"
+            android:textColor="@color/surface"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="@dimen/card_radius"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_preview">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="图片预览"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_preview_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="请选择图片"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,12 +71,37 @@
                 android:text="选择图片" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_mock_ocr"
+                android:id="@+id/btn_real_ocr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="模拟 OCR" />
+                android:text="开始 OCR" />
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_mock_ocr"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="模拟 OCR" />
+
+        <TextView
+            android:id="@+id/tv_preview_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="提示：当前阶段识别整张图片；如识别不理想，可先处理图片后重新选择，或使用模拟 OCR 兜底。"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/sp_ocr_mode"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_spinner" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -82,7 +143,8 @@
         <Spinner
             android:id="@+id/sp_subject"
             android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            android:background="@drawable/bg_spinner" />
 
         <TextView
             android:layout_width="match_parent"
@@ -95,7 +157,8 @@
         <Spinner
             android:id="@+id/sp_source_type"
             android:layout_width="match_parent"
-            android:layout_height="48dp" />
+            android:layout_height="48dp"
+            android:background="@drawable/bg_spinner" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -116,7 +179,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="加入错题本" />
+            android:text="加入错题本"
+            android:textColor="@color/text_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

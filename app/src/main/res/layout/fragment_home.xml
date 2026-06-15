@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -15,8 +16,10 @@
             android:id="@+id/tv_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_header_panel"
+            android:padding="16dp"
             android:text="欢迎使用智学扫描"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/surface"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -28,18 +31,57 @@
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:columnCount="2"
-            android:useDefaultMargins="true">
+            android:orientation="vertical">
 
-            <include android:id="@+id/card_total" layout="@layout/item_stat_card" />
-            <include android:id="@+id/card_wrong" layout="@layout/item_stat_card" />
-            <include android:id="@+id/card_today" layout="@layout/item_stat_card" />
-            <include android:id="@+id/card_review" layout="@layout/item_stat_card" />
-        </GridLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/card_total"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/card_wrong"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/card_today"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/card_review"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -62,7 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@drawable/bg_empty_state"
             android:gravity="center"
+            android:padding="24dp"
             android:text="暂无资料，点击底部扫描添加第一条记录"
             android:textColor="@color/text_secondary"
             android:visibility="gone" />

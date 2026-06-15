@@ -5,10 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * SQLiteOpenHelper 数据库创建与升级类，第一阶段使用本地 SQLite 保存资料。
+ * SQLiteOpenHelper 数据库创建与升级类。
+ *
+ * 答辩重点：
+ * 1. 本项目所有学习资料和错题都保存在同一张 StudyMaterial 表中。
+ * 2. 错题本不是单独一张表，而是通过 isWrongQuestion 字段筛选出来的复习视图。
+ * 3. 使用 SQLiteOpenHelper 是为了体现课程中“本地数据库建表、升级、CRUD”的考察点。
  */
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "smart_scan.db";
+
+    // 当前版本为 2：V1.1/V1.0 后续补充了错题复习相关字段。
+    // 如果用户设备上已有旧数据库，Android 会自动调用 onUpgrade 做增量升级。
     public static final int DATABASE_VERSION = 2;
     public static final String TABLE_MATERIAL = "StudyMaterial";
 
@@ -36,6 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // 建表时一次性创建完整字段。字段名使用 Java 风格，方便和实体类 StudyMaterial 对应。
+        // imagePath 保存的是系统相册返回的 Uri 字符串，不复制大图文件，节省存储空间。
         String sql = "CREATE TABLE " + TABLE_MATERIAL + " ("
                 + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_TITLE + " TEXT, "
@@ -60,6 +70,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // 这里不直接 DROP TABLE，是为了避免升级时把用户已经保存的学习资料删掉。
+        // 答辩时可以强调：数据库升级采用 ALTER TABLE 增量加字段，保证数据安全。
         if (oldVersion < 2) {
             addColumnIfNeeded(db, COL_WRONG_REASON + " TEXT");
             addColumnIfNeeded(db, COL_MASTERED + " INTEGER DEFAULT 0");
@@ -72,6 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + TABLE_MATERIAL + " ADD COLUMN " + columnSql);
         } catch (Exception ignored) {
             // 字段已存在时忽略，避免课程演示中反复安装调试导致升级崩溃。
+            // 这种写法适合课堂演示环境：既能兼容旧库，也能避免重复升级时出错。
         }
     }
 }
